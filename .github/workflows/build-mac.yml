@@ -25,11 +25,11 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -B build             -DCMAKE_BUILD_TYPE=Release             -DXPLM_SDK_INCLUDE_DIRECTORY="/Users/mustaqimnur/Library/CloudStorage/GoogleDrive-mustaqimnr@gmail.com/My Drive/xpsdk/SDK/CHeaders/XPLM"             -DXPLM_SDK_LIBRARY_FILE="/Users/mustaqimnur/Library/CloudStorage/GoogleDrive-mustaqimnr@gmail.com/My Drive/xpsdk/SDK/Libraries/Mac/XPLM.framework"             -DGLEW_INCLUDE_DIRECTORY="/opt/homebrew/opt/glew/include"             -DGLEW_LIBRARY_FILE="/opt/homebrew/opt/glew/lib/libGLEW.dylib"             -DGLM_INCLUDE_DIRECTORY="/opt/homebrew/opt/glm/include"             -DLIBPNG_INCLUDE_DIRECTORY="/opt/homebrew/opt/libpng/include"             -DLIBPNG_LIBRARY_FILE="/opt/homebrew/opt/libpng/lib/libpng.dylib"
+          cmake -B build             -DCMAKE_BUILD_TYPE=Release             -DXPLM_SDK_INCLUDE_DIRECTORY="/Users/mustaqimnur/Library/CloudStorage/GoogleDrive-mustaqimnr@gmail.com/My Drive/xpsdk/SDK/CHeaders/XPLM"             -DXPLM_SDK_LIBRARY_FILE="/Users/mustaqimnur/Library/CloudStorage/GoogleDrive-mustaqimnr@gmail.com/My Drive/xpsdk/SDK/Libraries/Mac/XPLM.framework"             -DGLEW_INCLUDE_DIRECTORY=/opt/homebrew/opt/glew/include             -DGLEW_LIBRARY_FILE=/opt/homebrew/opt/glew/lib/libGLEW.dylib             -DGLM_INCLUDE_DIRECTORY=/opt/homebrew/opt/glm/include             -DLIBPNG_INCLUDE_DIRECTORY=/opt/homebrew/opt/libpng/include             -DLIBPNG_LIBRARY_FILE=/opt/homebrew/opt/libpng/lib/libpng.dylib
 
       - name: Build
         run: |
-          cmake --build build --config Release
+          cmake --build build --config Release --verbose
 
       - name: Upload Artifact
         if: always()
@@ -39,3 +39,4 @@ jobs:
           path: |
             build/*.xpl
             build/*.framework
+            build/*.dylib
