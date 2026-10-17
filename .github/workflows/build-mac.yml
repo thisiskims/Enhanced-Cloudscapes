@@ -1,0 +1,41 @@
+name: Build macOS Plugin
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-13
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew install cmake glew glm libpng
+
+      - name: Download X-Plane SDK
+        run: |
+          curl -sLo XPSDK.zip https://developer.x-plane.com/wp-content/plugins/code-sample-generation/sdk_zip_files/XPSDK301.zip
+          unzip -q XPSDK.zip -d xpsdk
+
+      - name: Configure CMake
+        run: |
+          cmake -B build             -DCMAKE_BUILD_TYPE=Release             -DXPLM_SDK_INCLUDE_DIRECTORY="/Users/mustaqimnur/Library/CloudStorage/GoogleDrive-mustaqimnr@gmail.com/My Drive/xpsdk/SDK/CHeaders/XPLM"             -DXPLM_SDK_LIBRARY_FILE="/Users/mustaqimnur/Library/CloudStorage/GoogleDrive-mustaqimnr@gmail.com/My Drive/xpsdk/SDK/Libraries/Mac/XPLM.framework"             -DGLEW_INCLUDE_DIRECTORY="/opt/homebrew/opt/glew/include"             -DGLEW_LIBRARY_FILE="/opt/homebrew/opt/glew/lib/libGLEW.dylib"             -DGLM_INCLUDE_DIRECTORY="/opt/homebrew/opt/glm/include"             -DLIBPNG_INCLUDE_DIRECTORY="/opt/homebrew/opt/libpng/include"             -DLIBPNG_LIBRARY_FILE="/opt/homebrew/opt/libpng/lib/libpng.dylib"
+
+      - name: Build
+        run: |
+          cmake --build build --config Release
+
+      - name: Upload Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Enhanced-Cloudscapes-macOS
+          path: |
+            build/*.xpl
+            build/*.framework
