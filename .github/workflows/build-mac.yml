@@ -20,7 +20,7 @@ jobs:
 
       - name: Download X-Plane SDK
         run: |
-          curl -sLo XPSDK.zip https://developer.x-plane.com/wp-content/plugins/code-sample-generation/sdk_zip_files/XPSDK301.zip
+          curl -sLo XPSDK.zip https://developer.x-plane.com/wp-content/plugins/code-sample-generation/sdk_zip_files/XPSDK400.zip
           unzip -q XPSDK.zip -d xpsdk
 
       - name: Configure CMake
